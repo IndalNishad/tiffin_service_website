@@ -1,0 +1,523 @@
+/* ✅ UPDATED style.css with your provided styles */
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  line-height: 1.6;
+  background: #fdfdfd;
+  color: #333;
+}
+
+header {
+  background: #ff6347;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header h1 {
+  font-size: 1.5rem;
+}
+
+nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
+  background: #fff5f0;
+}
+
+.hero-text {
+  flex: 1 1 400px;
+  padding: 20px;
+}
+
+.hero-text h2 {
+  font-size: 2.5rem;
+  color: #ff6347;
+}
+
+.hero-text p {
+  margin: 15px 0;
+  font-size: 1.1rem;
+}
+
+.btn {
+  background-color: #25D366;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 20px;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #1ebe5c;
+}
+
+.wa-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.hero-image {
+  flex: 1 1 300px;
+  text-align: center;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Service Cards */
+.services {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.services h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.card-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  width: 280px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.card h3 {
+  color: #ff6347;
+  margin-bottom: 10px;
+}
+
+/* Rate Section */
+.rate-card {
+  padding: 40px 20px;
+  background: #fffbe6;
+  text-align: center;
+}
+
+.rate-card h2 {
+  color: #ff6347;
+  margin-bottom: 20px;
+}
+
+.rate-box {
+  background: #fff;
+  display: inline-block;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  max-width: 500px;
+  text-align: left;
+}
+
+.rate-box p {
+  margin: 10px 0;
+  font-size: 1.1rem;
+}
+
+.rate-box .highlight {
+  background: #ffeb3b;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 15px;
+  color: #000;
+}
+
+/* Footer */
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 50px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  nav a {
+    margin: 0 10px;
+  }
+
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Gallery Section */
+.gallery {
+  padding: 50px 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.gallery h2 {
+  margin-bottom: 20px;
+  color: #ff6347;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Map Section */
+.location {
+  padding: 50px 20px;
+  background-color: #fff5f0;
+  text-align: center;
+}
+
+.location h2 {
+  color: #ff6347;
+  margin-bottom: 20px;
+}
+
+.map-container {
+  max-width: 800px;
+  margin: auto;
+}
+
+/* Floating WhatsApp Button */
+.wa-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  width: 50px;
+  height: 50px;
+}
+
+.wa-float img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.about, .contact, .testimonials, .faq {
+  padding: 50px 20px;
+  background: #fefefe;
+  text-align: center;
+}
+
+.about h2, .contact h2, .testimonials h2, .faq h2 {
+  color: #ff6347;
+  margin-bottom: 20px;
+}
+
+.contact form {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact input, .contact textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.contact button {
+  background: #ff6347;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.contact button:hover {
+  background: #e5533d;
+}
+
+.flash {
+  background: #d4edda;
+  color: #155724;
+  padding: 12px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 10px auto;
+  text-align: center;
+}
+
+.testimonial-box p {
+  background: #f3f3f3;
+  margin: 10px auto;
+  max-width: 600px;
+  padding: 15px;
+  border-radius: 10px;
+  font-style: italic;
+}
+
+.faq details {
+  max-width: 600px;
+  margin: 10px auto;
+  text-align: left;
+  padding: 10px;
+  background: #fffaf0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.hero-banner {
+  position: relative;
+  background-image: url('/static/images/Thali.jpg'); /* Replace with your image */
+  background-size: cover;
+  background-position: center;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.hero-banner .overlay {
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  text-align: center;
+  padding: 20px;
+}
+
+.hero-content h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.hero-buttons .btn {
+  padding: 12px 30px;
+  font-size: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn.green {
+  background-color: #006400;
+  color: white;
+}
+
+.btn.green:hover {
+  background-color: #008000;
+}
+
+.btn.white {
+  background-color: white;
+  color: #333;
+  border: 2px solid #ccc;
+}
+
+.btn.white:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsive text */
+@media (max-width: 768px) {
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+}
+
+.hero-banner {
+  position: relative;
+  height: 90vh;
+  background: url('/static/images/Thali 2.jpg') center center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Overlay blur + dark layer */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(2px);
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+/* Text content above overlay */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  padding: 0 20px;
+}
+
+.hero-content h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.hero-buttons .btn {
+  padding: 12px 30px;
+  font-size: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn.green {
+  background-color: #ff6347;
+  color: white;
+}
+
+.btn.green:hover {
+  background-color: #852f20a2;
+}
+
+.btn.white {
+  background-color: white;
+  color: #333;
+  border: 2px solid #ccc;
+}
+
+.btn.white:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+.btn.white {
+  background-color: white;
+  color: #333;
+  border: 2px solid #ccc;
+  transition: all 0.3s ease;
+}
+
+.btn.white:hover {
+  background-color: #25d365b6;   /* ✅ WhatsApp green */
+  color: white;
+  border-color: #25D366;
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiffin Express</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <h1>Tiffin Express</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#rates">Rates</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+<section class="hero-banner">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h2>Homemade Goodness, Delivered Fresh.</h2>
+    <p>Come indulge in traditional Indian cuisine, prepared by home chefs with authentic spices and flavors.</p>
+    <div class="hero-buttons">
+      <a href="#menu" class="btn green">View Menu</a>
+      <a
+  href="https://wa.me/918273061508?text=Hi%2C%20I%20want%20to%20place%20a%20tiffin%20order."
+  class="btn white"
+  target="_blank"
+>
+  <img src="https://img.icons8.com/color/24/000000/whatsapp--v1.png" style="vertical-align: middle; " />
+  Order Now
+</a>
+
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <h2>About Us</h2>
+    <p>
+      At <strong>Tiffin Express</strong>, we believe that every meal should feel like home. 
+      We deliver fresh, hygienic, and tasty homemade food to working professionals, students, and families. 
+      Whether it's lunch or dinner, we ensure quality, quantity, and punctuality every day.
+    </p>
+  </section>
+
+  <!-- Service Plans -->
+  <section class="services">
+    <h2>Our Plans</h2>
+    <div class="card-container">
+      <div class="card">
+        <h3>Basic Plan</h3>
+        <p>2 Roti + Sabzi + Rice</p>
+        <p>₹70/day</p>
+      </div>
+      <div class="card">
+        <h3>Regular Plan</h3>
+        <p>4 Roti + Sabzi + Rice + Dal</p>
+        <p>₹100/day</p>
+      </div>
+      <div class="card">
+        <h3>Premium Plan</h3>
+        <p>5 Roti + 2 Sabzi + Rice + Dal + Sweet</p>
+        <p>₹130/day</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rate Card -->
+  <section class="rate-card" id="rates">
+    <h2>Our Rates</h2>
+    <div class="rate-box">
+      <p><strong>Lunch + Dinner:</strong> ₹3600/month</p>
+      <p><strong>Lunch Only:</strong> ₹2200/month</p>
+      <p><strong>Dinner Only:</strong> ₹2050/month</p>
+      <p><strong>Location:</strong> Pari Chowk, Near Ansal Plaza, Tugalpur, Greater Noida</p>
+      <p><strong>Contact:</strong> 8273061508, 9837710741</p>
+      <p class="highlight">Delicious & Hygienic Pure Vegetarian Food</p>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="gallery" id="gallery">
+    <h2>Our Tiffin Gallery</h2>
+    <div class="gallery-grid">
+      <img src="https://i.ibb.co/Xz1B3Gn/thali1.jpg" alt="Thali 1" />
+      <img src="https://i.ibb.co/fCkDrM4/thali2.jpg" alt="Thali 2" />
+      <img src="https://i.ibb.co/YRxnCVY/thali3.jpg" alt="Thali 3" />
+      <img src="https://i.ibb.co/PGvvKnH/thali4.jpg" alt="Thali 4" />
+    </div>
+  </section>
+
+  <!-- Location Map -->
+  <section class="location" id="location">
+    <h2>Our Location</h2>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14013.272434354304!2d77.509299!3d28.474389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cc198abfd0b89%3A0x5f5e0d79dbf1e33e!2sJava%20Point%20Greater%20Noida!5e0!3m2!1sen!2sin!4v1698765432101"
+        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <h2>What Our Customers Say</h2>
+    <div class="testimonial-box">
+      <p>"Best tiffin service in town! Always fresh and tasty." - <strong>Ravi Sharma</strong></p>
+      <p>"Affordable and homely food. Highly recommended!" - <strong>Neha Mehta</strong></p>
+      <p>"Delivery is always on time. Love the variety." - <strong>Amit Yadav</strong></p>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section class="faq" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <details>
+      <summary>Do you offer lunch and dinner both?</summary>
+      <p>Yes, we offer both lunch and dinner options. You can choose either or both.</p>
+    </details>
+    <details>
+      <summary>Is the food vegetarian?</summary>
+      <p>Yes, we provide 100% pure vegetarian and hygienic meals.</p>
+    </details>
+    <details>
+      <summary>Can I cancel or pause my subscription?</summary>
+      <p>Yes, just contact us 24 hours in advance for any pause or cancellation.</p>
+    </details>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <form method="POST" action="/contact">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="tel" name="phone" placeholder="Phone Number" required />
+      <textarea name="message" rows="4" placeholder="Your Message"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Tiffin Express. All rights reserved.</p>
+  </footer>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="flash">{{ messages[0] }}</div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- Floating WhatsApp Button -->
+  <a
+    href="https://wa.me/918273061508?text=Hi%2C%20I%20want%20to%20place%20a%20tiffin%20order."
+    class="wa-float"
+    target="_blank">
+    <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat" />
+  </a>
+
+</body>
+</html>

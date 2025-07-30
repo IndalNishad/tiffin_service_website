@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forgot Admin Password</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+  <div class="reset-container">
+    <h2>Forgot Admin Password</h2>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    {% if message %}<p class="message">{{ message }}</p>{% endif %}
+    <form method="POST">
+      <input type="text" name="new_username" placeholder="New Username" required>
+      <input type="password" name="new_password" placeholder="New Password" required>
+      <button type="submit">Reset</button>
+    </form>
+  </div>
+</body>
+</html>

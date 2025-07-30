@@ -5,42 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tiffin Express</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
 </head>
 <body>
+ 
 
   <!-- Navbar -->
-  <header>
-    <h1>Tiffin Express</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#menu">Menu</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#rates">Rates</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+<header id="navbar">
+   <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Tiffin Express Logo" class="logo">
+  <nav>
+    <a href="#">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#rates">Rates</a>
+    <a href="#contact">Contact</a>
+    <a href="{{ url_for('admin_login') }}">Admin Login</a>
+
+  </nav>
+</header>
+
 
   <!-- Hero Section -->
 <section class="hero-banner">
   <div class="hero-overlay"></div>
   <div class="hero-content">
+
+    <!-- 🆕 Animated Namaste + Static Welcome to RCF -->
+  <div class="hero-heading">
+  <h1 class="namaste-text" id="typing-text"></h1>
+  <div class="welcome-wrap">
+    <span class="welcome-big">Welcome to RCF</span>
+  </div>
+</div>
+
+
+    <!-- ✅ Existing Content -->
     <h2>Homemade Goodness, Delivered Fresh.</h2>
     <p>Come indulge in traditional Indian cuisine, prepared by home chefs with authentic spices and flavors.</p>
-    <div class="hero-buttons">
-      <a href="#menu" class="btn green">View Menu</a>
-      <a
-  href="https://wa.me/918273061508?text=Hi%2C%20I%20want%20to%20place%20a%20tiffin%20order."
-  class="btn white"
-  target="_blank"
->
-  <img src="https://img.icons8.com/color/24/000000/whatsapp--v1.png" style="vertical-align: middle; " />
-  Order Now
-</a>
 
-    </div>
+    <div class="hero-buttons">
+  {% if menu_pdf %}
+    <a href="{{ url_for('uploaded_file', filename=menu_pdf) }}" target="_blank" class="btn green">View Menu</a>
+  {% else %}
+    <button onclick="alert('⚠️ No menu file exists!')" class="btn green">View Menu</button>
+  {% endif %}
+
+  <a
+    href="https://wa.me/918273061508?text=Hi%2C%20I%20want%20to%20place%20a%20tiffin%20order."
+    class="btn white"
+    target="_blank"
+  >
+    <img src="https://img.icons8.com/color/24/000000/whatsapp--v1.png" style="vertical-align: middle;" />
+    Order Now
+  </a>
+</div>
+
+
   </div>
 </section>
+
+
 
 
 
@@ -102,14 +126,30 @@
 
   <!-- Location Map -->
   <section class="location" id="location">
-    <h2>Our Location</h2>
-    <div class="map-container">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14013.272434354304!2d77.509299!3d28.474389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cc198abfd0b89%3A0x5f5e0d79dbf1e33e!2sJava%20Point%20Greater%20Noida!5e0!3m2!1sen!2sin!4v1698765432101"
-        width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
-      </iframe>
-    </div>
-  </section>
+  <h2>Our Service Availability</h2>
+
+  <div class="service-areas">
+    <ul>
+      <li>Knowledge Park I</li>
+      <li>Knowledge Park II</li>
+      <li>Knowledge Park III</li>
+      <li>Alpha I</li>
+      <li>Alpha II</li>
+      <li>Beta I</li>
+      <li>Beta II</li>
+      <li>Tugalpur Village</li>
+      <li>Jagat Farm</li>
+    </ul>
+  </div>
+
+  <div class="map-container">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14013.272434354304!2d77.509299!3d28.474389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cc198abfd0b89%3A0x5f5e0d79dbf1e33e!2sJava%20Point%20Greater%20Noida!5e0!3m2!1sen!2sin!4v1698765432101"
+      width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
+    </iframe>
+  </div>
+</section>
+
 
   <!-- Testimonials -->
   <section class="testimonials">
@@ -139,15 +179,31 @@
   </section>
 
   <!-- Contact Form -->
-  <section class="contact" id="contact">
-    <h2>Contact Us</h2>
-    <form method="POST" action="/contact">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="tel" name="phone" placeholder="Phone Number" required />
-      <textarea name="message" rows="4" placeholder="Your Message"></textarea>
-      <button type="submit">Send Message</button>
-    </form>
-  </section>
+<section class="contact" id="contact">
+  <h2>Contact Us</h2>
+  <div class="contact-icons">
+    <a href="https://wa.me/918273061508" target="_blank" class="contact-link">
+      <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp" />
+      WhatsApp
+    </a>
+    
+    <a href="tel:+919837710741" class="contact-link">
+      <img src="https://img.icons8.com/fluency/48/000000/phone.png" alt="Phone" />
+      Phone
+    </a>
+
+    <a href="mailto:tiffinexpress@gmail.com" class="contact-link">
+      <img src="https://img.icons8.com/fluency/48/000000/email.png" alt="Email" />
+      Email
+    </a>
+
+    <a href="https://instagram.com/tiffinexpress" target="_blank" class="contact-link">
+      <img src="https://img.icons8.com/color/48/000000/instagram-new--v1.png" alt="Instagram" />
+      Instagram
+    </a>
+  </div>
+</section>
+
 
   <!-- Footer -->
   <footer>
@@ -168,6 +224,50 @@
     target="_blank">
     <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="Chat" />
   </a>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const typing = document.getElementById("typing-text");
+    const text = "नमस्ते";
+    let i = 0;
+
+    function typeLoop() {
+      if (i < text.length) {
+        typing.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeLoop, 200);
+      } else {
+        setTimeout(() => {
+          typing.textContent = "";
+          i = 0;
+          typeLoop();
+        }, 1500);
+      }
+    }
+
+    typeLoop();
+  });
+</script>
+<script>
+let prevScrollPos = window.pageYOffset;
+const navbar = document.getElementById("navbar");
+
+window.addEventListener("scroll", () => {
+  const currentScrollPos = window.pageYOffset;
+
+  if (prevScrollPos > currentScrollPos) {
+    // Scrolling up — show navbar
+    navbar.classList.remove("hide-nav");
+  } else {
+    // Scrolling down — hide navbar
+    navbar.classList.add("hide-nav");
+  }
+
+  prevScrollPos = currentScrollPos;
+});
+</script>
+
+
+
 
 </body>
 </html>

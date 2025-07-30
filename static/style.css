@@ -17,7 +17,7 @@ body {
 header {
   background: #ff6347;
   color: white;
-  padding: 15px 30px;
+  padding: 8px 20px;  /* reduced padding to make it thinner */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,6 +25,16 @@ header {
   top: 0;
   z-index: 1000;
 }
+
+/* Logo styling */
+.logo {
+  height: auto;
+  max-height: 50px;  /* This keeps logo within nav height */
+  margin-top: -5px;  /* Push upward a little to appear bigger */
+  margin-bottom: -5px;
+}
+
+
 
 header h1 {
   font-size: 1.5rem;
@@ -273,34 +283,6 @@ footer {
   margin-bottom: 20px;
 }
 
-.contact form {
-  max-width: 500px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.contact input, .contact textarea {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-.contact button {
-  background: #ff6347;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.contact button:hover {
-  background: #e5533d;
-}
 
 .flash {
   background: #d4edda;
@@ -521,3 +503,295 @@ footer {
   color: white;
   border-color: #25D366;
 }
+
+.hero-heading {
+  text-align: center;
+  color: white;
+  font-family: 'Caveat', cursive;
+  margin-bottom: 20px;
+}
+
+.namaste-text {
+  font-size: 64px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid white;
+  width: fit-content;
+  margin: 0 auto;
+  animation: typing 2.5s steps(10), blink 0.7s step-end infinite;
+}
+
+
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 8ch }
+}
+
+@keyframes blink {
+  50% { border-color: transparent }
+}
+.hero-heading {
+  text-align: center;
+  color: white;
+  font-family: 'Caveat', cursive;
+  margin-bottom: 20px;
+}
+
+.namaste-text {
+  font-size: 64px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid white;
+  width: fit-content;
+  margin: 0 auto;
+  animation: typing 2.5s steps(10), blink 0.7s step-end infinite;
+}
+
+
+.hero-heading {
+  text-align: center;
+  color: white;
+  font-family: 'Caveat', cursive;
+  margin-bottom: 40px;
+  padding-top: 20px;
+}
+
+.namaste-text {
+  font-size: 60px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid white;
+  width: fit-content;
+  margin: 0 auto;
+  animation: typing 2.5s steps(10), blink 0.7s step-end infinite;
+}
+
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 80px 20px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.hero-heading {
+  text-align: center;
+  color: white;
+  font-family: 'Caveat', cursive;
+  margin-bottom: 30px;
+}
+
+.namaste-text {
+  font-size: 64px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid white;
+  width: fit-content;
+  margin: 0 auto;
+  animation: typing 2.5s steps(10), blink 0.7s step-end infinite;
+}
+
+.hero-heading {
+  text-align: center;
+  margin-bottom: 20px; /* reduce space below */
+  margin-top: -20px; /* pull it upward if needed */
+}
+
+.namaste-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.welcome-wrap .welcome-big {
+  font-size: 1.2rem;  /* ✅ Smaller size for "Welcome to RCF" */
+  font-weight: 600;
+  color: #ffffffd9;
+  display: block;
+  margin-top: 10px;
+}
+.hero-banner {
+  height: 100vh;  /* was 90vh before */
+}
+
+#navbar {
+  transition: top 0.3s ease-in-out;
+}
+
+.hide-nav {
+  top: -100px; /* Move nav out of view */
+}
+
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 1.1rem;
+}
+
+.contact-item img {
+  width: 30px;
+  height: 30px;
+}
+
+.contact-item a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.contact-item a:hover {
+  color: #ff6347;
+}
+.contact-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.contact-link img {
+  width: 32px;
+  height: 32px;
+}
+
+.contact-link:hover {
+  color: #25D366; /* WhatsApp green hover for all */
+  transform: scale(1.05);
+}
+
+.location {
+  padding: 50px 20px;
+  background-color: #fff5f0;
+  text-align: center;
+}
+
+.location h2 {
+  color: #ff6347;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.service-areas ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.service-areas li {
+  background-color: #ff634722;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: 500;
+  color: #333;
+  font-size: 1rem;
+}
+
+.map-container {
+  max-width: 800px;
+  margin: auto;
+}
+.testimonial-box {
+  max-width: 800px;
+  margin: auto;
+  text-align: left;
+  background: #fffaf0;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.testimonial-box p {
+  margin-bottom: 15px;
+  font-style: italic;
+}
+.faq details {
+  max-width: 700px;
+  margin: 15px auto;
+  padding: 15px;
+  background-color: #fff5f0;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.faq summary {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+.service-areas ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.service-areas li {
+  background-color: #ffe4dc;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.pdf-menu {
+  padding: 40px;
+  text-align: center;
+}
+
+.pdf-menu iframe {
+  border: 2px solid #ff6347;
+  border-radius: 8px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+
+  /* Remove any shadow */
+  box-shadow: none;
+}
+

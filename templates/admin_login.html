@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login - Tiffin Express</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <div class="login-container">
+      <h2>Admin Login</h2>
+      {% if error %}
+        <p class="error">{{ error }}</p>
+      {% endif %}
+      <form method="POST">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+    <!-- admin_login.html -->
+<a href="{{ url_for('admin_forgot') }}" class="reset-link">Forgot Password?</a>
+<a href="{{ url_for('admin_reset') }}">Change your password</a>
+
+
+    </div>
+  </div>
+</body>
+</html>

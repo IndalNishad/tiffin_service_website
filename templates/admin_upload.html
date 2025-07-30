@@ -1,0 +1,66 @@
+<!-- templates/admin_upload.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Menu PDF</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .center-upload {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .upload-box {
+      border: 1px solid #ccc;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background-color: #fff;
+    }
+
+    input[type="file"] {
+      margin: 15px 0;
+    }
+
+    .btn {
+      padding: 8px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="center-upload">
+    <div class="upload-box">
+      <h2>Upload Today's Menu (PDF)</h2>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul>
+            {% for message in messages %}
+              <li style="color:green">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+      <form method="post" enctype="multipart/form-data">
+        <input type="file" name="menu_pdf" accept=".pdf" required><br>
+        <button type="submit" class="btn">Upload</button>
+      </form>
+      <br>
+      <a href="{{ url_for('admin_logout') }}">Logout</a>
+    </div>
+  </div>
+</body>
+</html>

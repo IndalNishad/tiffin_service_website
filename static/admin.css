@@ -157,3 +157,266 @@ body {
   color: green;
   margin-bottom: 10px;
 }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.reset-container {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.reset-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.reset-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.reset-container button {
+  width: 100%;
+  padding: 10px;
+  background: #27ae60;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reset-container button:hover {
+  background: #219150;
+}
+
+.reset-container .error {
+  color: #e74c3c;
+  margin-bottom: 15px;
+}
+
+.reset-container .message {
+  color: #2ecc71;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.login-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #2980b9;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.login-btn:hover {
+  background: #1e6fa0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.otp-container {
+  background: #fff;
+  padding: 35px 40px;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+}
+
+.otp-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
+
+.otp-container input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.otp-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #27ae60;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.otp-container button:hover {
+  background-color: #219150;
+}
+
+.otp-container .error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.otp-container .message {
+  color: #2ecc71;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.otp-container .back-link {
+  margin-top: 15px;
+  display: inline-block;
+  color: #3498db;
+  text-decoration: none;
+}
+
+.otp-container .back-link:hover {
+  text-decoration: underline;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f5f5;
+}
+
+.reset-container {
+  max-width: 400px;
+  margin: 80px auto;
+  background: #ffffff;
+  padding: 30px 25px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.reset-container h2 {
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.reset-container input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+  transition: border-color 0.3s;
+}
+
+.reset-container input:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+.reset-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.reset-container button:hover {
+  background-color: #45a049;
+}
+
+.login-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #4CAF50;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.login-link:hover {
+  color: #388e3c;
+  text-decoration: underline;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.message {
+  color: green;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.success-box {
+  text-align: center;
+  padding: 30px 40px;
+  background: white;
+  border: 2px solid #c3e6cb;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.success-box h2 {
+  color: green;
+  margin-bottom: 25px;
+}
+
+.btn.green {
+  padding: 10px 20px;
+  background-color: green;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.btn.green:hover {
+  background-color: darkgreen;
+}

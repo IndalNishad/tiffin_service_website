@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory, session, flash
 import os
 from werkzeug.utils import secure_filename
+from flask_mail import Mail, Message
+import random
+
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Replace with a secure key
@@ -10,6 +14,105 @@ ADMIN_USERNAME = 'admin'
 ADMIN_PASSWORD = '1234'
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'shubhammaurya8840@gmail.com'  # ✅ Your Gmail ID
+app.config['MAIL_PASSWORD'] = 'bogt rdls gfof mraa'     # ✅ App password from Gmail
+
+mail = Mail(app)
+otp_store = {}  # Temporary dictionary
+
+@app.route('/admin/send-otp', methods=['GET', 'POST'])
+def send_otp():
+    message = error = None
+    if request.method == 'POST':
+        email = request.form.get('email')
+
+        if not email:
+            error = "❌ Email is required."
+        else:
+            # ✅ Load registered email from admin.json
+            if os.path.exists('admin.json'):
+                with open('admin.json', 'r') as f:
+                    data = json.load(f)
+                registered_email = data.get('email')
+
+                # ✅ Match entered email
+                if email != registered_email:
+                    error = "❌ Enter your registered admin email."
+                else:
+                    # ✅ Proceed to send OTP
+                    otp = str(random.randint(100000, 999999))
+                    otp_store[email] = otp
+                    try:
+                        msg = Message('Your OTP Code', sender=app.config['MAIL_USERNAME'], recipients=[email])
+                        msg.body = f'Your OTP code is: {otp}'
+                        mail.send(msg)
+                        return redirect(url_for('verify_otp', email=email))
+                    except Exception as e:
+                        print(e)
+                        error = "❌ Failed to send OTP. Check email configuration."
+            else:
+                error = "❌ Admin email not found in system."
+
+    return render_template('send_otp.html', error=error, message=message)
+
+
+@app.route('/admin/verify-otp/<email>', methods=['GET', 'POST'])
+def verify_otp(email):
+    message = error = None
+
+    if request.method == 'POST':
+        entered_otp = request.form.get('otp')
+
+        # ✅ Use global dictionary directly
+        stored_otp = otp_store.get(email)
+
+        if not stored_otp:
+            error = "Session expired or OTP not sent. Please request again."
+        elif entered_otp == stored_otp:
+            session['otp_verified'] = True
+            session['verified_email'] = email
+            return redirect(url_for('reset_password'))
+        else:
+            error = "❌ Invalid OTP. Please try again."
+
+    return render_template('verify_otp.html', email=email, error=error, message=message)
+
+
+@app.route('/admin/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    if not session.get('otp_verified'):
+        return redirect(url_for('admin_login'))
+
+    error = message = None
+
+    if request.method == 'POST':
+        new_user = request.form.get('new_username')
+        new_pass = request.form.get('new_password')
+
+        # Update admin.json
+        with open('admin.json', 'r') as f:
+            data = json.load(f)
+
+        data['username'] = new_user
+        data['password'] = new_pass
+
+        with open('admin.json', 'w') as f:
+            json.dump(data, f)
+
+        # Clear session
+        session.pop('otp_verified', None)
+        session.pop('verified_email', None)
+
+        # Show success page
+        return render_template('reset_success.html')
+
+    return render_template('admin_reset_password.html', error=error, message=message)
+
+
+
 
 # PDF Upload Allowed Types
 def allowed_file(filename):
@@ -48,6 +151,10 @@ def admin_login():
         stored_username = ADMIN_USERNAME
         stored_password = ADMIN_PASSWORD
 
+    # 🔐 Show reset message only once
+    if session.pop('show_reset_message', None):
+        flash("✅ Credentials updated! Please login.")
+
     if request.method == 'POST':
         if request.form['username'] == stored_username and request.form['password'] == stored_password:
             session['admin_logged_in'] = True
@@ -56,6 +163,7 @@ def admin_login():
             error = 'Invalid Credentials'
     
     return render_template('admin_login.html', error=error)
+
 
 
 
@@ -93,17 +201,25 @@ def admin_forgot():
     message = None
 
     if request.method == 'POST':
-        new_username = request.form.get('new_username')
-        new_password = request.form.get('new_password')
+        email = request.form.get('email')
 
-        if new_username and new_password:
-            with open('admin.json', 'w') as f:
-                json.dump({'username': new_username, 'password': new_password}, f)
-            message = "✅ Credentials updated successfully. You can now login."
+        with open('admin.json', 'r') as f:
+            data = json.load(f)
+
+        # ✅ STEP: Check if entered email matches registered admin email
+        if email != data.get('email'):
+            error = "❌ This email is not registered as admin."
         else:
-            error = "❌ Please fill both fields."
+            # Proceed to generate and store OTP
+            otp = str(random.randint(100000, 999999))
+            session['otp'] = otp
+            session['reset_email'] = email
+            message = f"✅ OTP has been sent to {email} (Actually not sent — just for demo: {otp})"
+            return redirect(url_for('otp_verify'))
 
     return render_template('admin_forgot.html', error=error, message=message)
+
+
 
 
 # Run
@@ -113,22 +229,31 @@ def admin_reset():
     message = None
 
     if request.method == 'POST':
-        old_user = request.form['old_username']
-        old_pass = request.form['old_password']
-        new_user = request.form['new_username']
-        new_pass = request.form['new_password']
+        old_user = request.form['old_username'].strip()
+        old_pass = request.form['old_password'].strip()
+        new_user = request.form['new_username'].strip()
+        new_pass = request.form['new_password'].strip()
 
-        with open('admin.json', 'r') as f:
-            data = json.load(f)
+        try:
+            with open('admin.json', 'r') as f:
+                data = json.load(f)
 
-        if old_user == data['username'] and old_pass == data['password']:
-            with open('admin.json', 'w') as f:
-                json.dump({'username': new_user, 'password': new_pass}, f)
-            message = "✅ Credentials updated successfully!"
-        else:
-            error = "❌ Old credentials are incorrect."
+            if old_user == data.get('username') and old_pass == data.get('password'):
+                # Update only username and password
+                data['username'] = new_user
+                data['password'] = new_pass
+
+                with open('admin.json', 'w') as f:
+                    json.dump(data, f, indent=4)
+
+                message = "✅ Credentials updated successfully!"
+            else:
+                error = "❌ Old credentials are incorrect."
+        except Exception as e:
+            error = f"Error: {str(e)}"
 
     return render_template('admin_reset.html', error=error, message=message)
+
 
 
 # Run

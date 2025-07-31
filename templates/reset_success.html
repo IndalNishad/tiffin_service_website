@@ -1,0 +1,17 @@
+<!-- templates/reset_success.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Success</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+  <div class="center-container">
+    <div class="success-box">
+      <h2>✅ Password updated successfully!</h2>
+      <a href="{{ url_for('admin_login') }}" class="btn green">Login Now</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OTP Verification</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+</head>
+<body>
+  <div class="reset-container">
+    <h2>OTP Verification</h2>
+    <form method="POST">
+      <input type="email" name="email" placeholder="Enter your email" required />
+      <button type="submit">Send OTP</button>
+    </form>
+    
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    {% if message %}
+      <p class="message">{{ message }}</p>
+    {% endif %}
+
+    <a href="{{ url_for('admin_login') }}" class="login-link">Back to Admin Login</a>
+  </div>
+</body>
+</html>

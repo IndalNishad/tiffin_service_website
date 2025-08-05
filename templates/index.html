@@ -12,17 +12,8 @@
  
 
   <!-- Navbar -->
-<header id="navbar">
-   <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="Tiffin Express Logo" class="logo">
-  <nav>
-    <a href="#">Home</a>
-    <a href="#menu">Menu</a>
-    <a href="#rates">Rates</a>
-    <a href="#contact">Contact</a>
-    <a href="{{ url_for('admin_login') }}">Admin Login</a>
+{% include 'navbar.html' %}
 
-  </nav>
-</header>
 
 
   <!-- Hero Section -->
@@ -64,10 +55,6 @@
   </div>
 </section>
 
-
-
-
-
   <!-- About Section -->
   <section class="about" id="about">
     <h2>About Us</h2>
@@ -78,55 +65,73 @@
     </p>
   </section>
 
-  <!-- Service Plans -->
-  <section class="services">
-    <h2>Our Plans</h2>
-    <div class="card-container">
-      <div class="card">
-        <h3>Basic Plan</h3>
-        <p>2 Roti + Sabzi + Rice</p>
-        <p>₹70/day</p>
-      </div>
-      <div class="card">
-        <h3>Regular Plan</h3>
-        <p>4 Roti + Sabzi + Rice + Dal</p>
-        <p>₹100/day</p>
-      </div>
-      <div class="card">
-        <h3>Premium Plan</h3>
-        <p>5 Roti + 2 Sabzi + Rice + Dal + Sweet</p>
-        <p>₹130/day</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- Rate Card -->
-  <section class="rate-card" id="rates">
-    <h2>Our Rates</h2>
-    <div class="rate-box">
+
+
+
+
+
+  <!-- Service Plans -->
+<section class="services">
+  <h2>Our Plans</h2>
+  <div class="card-container">
+    <div class="card">
+      <h3>One Time Meal Plan</h3>
+      <p>5 Roti + 2 Sabzi (including Dal) + Rice + Salad + Pickles</p>
+      <p>₹100/Meal</p>
+    </div>
+    <div class="card">
+      <h3>Regular Plan</h3>
       <p><strong>Lunch + Dinner:</strong> ₹3600/month</p>
       <p><strong>Lunch Only:</strong> ₹2200/month</p>
       <p><strong>Dinner Only:</strong> ₹2050/month</p>
-      <p><strong>Location:</strong> Pari Chowk, Near Ansal Plaza, Tugalpur, Greater Noida</p>
-      <p><strong>Contact:</strong> 8273061508, 9837710741</p>
-      <p class="highlight">Delicious & Hygienic Pure Vegetarian Food</p>
+      {% if menu_pdf %}
+        <p><a href="{{ url_for('uploaded_file', filename=menu_pdf) }}" target="_blank">Click here to view weekly plan</a></p>
+      {% else %}
+        <p><a href="#" onclick="alert('⚠️ No menu file available')">Click here to view weekly plan</a></p>
+      {% endif %}
     </div>
-  </section>
+  </div>
+</section>
+
+
+
+
+
+
+
+  <!-- Rate Card -->
+<section class="catering-section" id="rates">
+  <h2>Catering Services for Your Special Occasions</h2>
+  <div class="catering-box">
+    <p>
+      Planning a birthday, family gathering, office event, or religious ceremony?<br>
+      We've got you covered with our <strong>pure vegetarian, hygienic and homely catering service</strong>.
+    </p>
+    <p>✨ Experience food that feels just like home, made with love and care.</p>
+    <a href="#contact" class="catering-btn">📲 Get in Touch</a>
+  </div>
+</section>
+
+
 
   <!-- Gallery -->
-  <section class="gallery" id="gallery">
-    <h2>Our Tiffin Gallery</h2>
-    <div class="gallery-grid">
-      <img src="https://i.ibb.co/Xz1B3Gn/thali1.jpg" alt="Thali 1" />
-      <img src="https://i.ibb.co/fCkDrM4/thali2.jpg" alt="Thali 2" />
-      <img src="https://i.ibb.co/YRxnCVY/thali3.jpg" alt="Thali 3" />
-      <img src="https://i.ibb.co/PGvvKnH/thali4.jpg" alt="Thali 4" />
-    </div>
-  </section>
+<section class="gallery" id="gallery">
+  <h2>Our Tiffin Gallery</h2>
+  <div class="gallery-grid">
+    <img src="{{ url_for('static', filename='gallery/gallery1.jpg') }}" alt="Thali 1">
+    <img src="{{ url_for('static', filename='gallery/gallery2.jpg') }}" alt="Thali 2">
+    <img src="{{ url_for('static', filename='gallery/gallery3.jpg') }}" alt="Thali 3">
+    <img src="{{ url_for('static', filename='gallery/gallery4.jpg') }}" alt="Thali 4">
+  </div>
+</section>
+
+
+
 
   <!-- Location Map -->
   <section class="location" id="location">
-  <h2>Our Service Availability</h2>
+  <h2>Our Service Available in All Over Greater Noida </h2>
 
   <div class="service-areas">
     <ul>
@@ -205,9 +210,11 @@
 </section>
 
 
+
+
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 Tiffin Express. All rights reserved.</p>
+    <p>&copy; RCF Tiffin Service. All rights reserved.</p>
   </footer>
 
   <!-- Flash Messages -->

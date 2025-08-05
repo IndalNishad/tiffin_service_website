@@ -1,66 +1,164 @@
-<!-- templates/admin_upload.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Upload Menu PDF</title>
+  <title>Admin Upload Page</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+
     .center-upload {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       flex-direction: column;
-      text-align: center;
+      align-items: center;
+      padding: 40px 20px;
     }
 
     .upload-box {
-      border: 1px solid #ccc;
+      background-color: #fff;
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      background-color: #fff;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .upload-box h2 {
+      margin-bottom: 20px;
     }
 
     input[type="file"] {
-      margin: 15px 0;
+      margin: 10px 0;
+      padding: 6px;
+      width: 100%;
     }
 
     .btn {
-      padding: 8px 20px;
+      padding: 10px 24px;
       background-color: #28a745;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      margin-top: 10px;
     }
 
     .btn:hover {
       background-color: #218838;
     }
+
+    .logout-link {
+      margin-top: 20px;
+      display: inline-block;
+      color: #dc3545;
+      text-decoration: none;
+    }
+
+    .logout-link:hover {
+      text-decoration: underline;
+    }
+
+    .gallery-preview img {
+      width: 120px;
+      height: auto;
+      margin: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+      font-size: 18px;
+      margin-top: 25px;
+      color: #333;
+    }
+    .success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
   </style>
 </head>
 <body>
+  {% include 'navbar.html' %}
+
   <div class="center-upload">
-    <div class="upload-box">
-      <h2>Upload Today's Menu (PDF)</h2>
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          <ul>
-            {% for message in messages %}
-              <li style="color:green">{{ message }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      {% endwith %}
-      <form method="post" enctype="multipart/form-data">
-        <input type="file" name="menu_pdf" accept=".pdf" required><br>
-        <button type="submit" class="btn">Upload</button>
-      </form>
-      <br>
-      <a href="{{ url_for('admin_logout') }}">Logout</a>
+
+    <!-- 📄 PDF Upload -->
+<!-- 📄 PDF Upload -->
+<!-- 📄 PDF Upload -->
+<div class="upload-box">
+  <h2>Upload Today's Menu (PDF)</h2>
+
+{% with messages = get_flashed_messages(category_filter=['pdf']) %}
+  {% if messages %}
+    <div class="success-message">
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
     </div>
+  {% endif %}
+{% endwith %}
+
+
+  <form method="post" enctype="multipart/form-data" action="{{ url_for('admin_upload') }}">
+    <input type="file" name="menu_pdf" accept=".pdf" required><br>
+    <button type="submit" class="btn">Upload PDF</button>
+  </form>
+</div>
+
+
+
+    <!-- 🖼️ Gallery Upload -->
+<!-- 🖼️ Gallery Upload Cards -->
+
+<div class="upload-box">
+  <h2>Upload Gallery Images</h2> <!-- 🟢 This is the main heading shown ONCE -->
+
+  <form method="post" enctype="multipart/form-data" action="{{ url_for('admin_upload_images') }}">
+    <div class="gallery-container" style="display:flex; flex-wrap:wrap; justify-content:center; gap:30px;">
+
+      {% for i in range(1, 5) %}
+      <div class="card" style="background:#fff; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); padding:20px; width:220px; text-align:center;">
+        <h3 style="margin-bottom:15px; color:#333;">Image {{ i }}</h3>
+        <img src="{{ url_for('static', filename='gallery/gallery' ~ i ~ '.jpg') }}" alt="Gallery {{ i }}" style="width:100%; height:140px; object-fit:cover; border-radius:6px; margin-bottom:12px; border:1px solid #ddd;">
+        <input type="file" name="image{{ i }}" accept="image/*" style="margin-bottom:10px;">
+        <button type="submit" style="background:#28a745; color:white; padding:8px 14px; border:none; border-radius:5px; cursor:pointer;">Upload</button>
+      </div>
+      {% endfor %}
+
+    </div>
+  </form>
+
+  <!-- ✅ Flash Message for Gallery Upload -->
+  {% with messages = get_flashed_messages(category_filter=['gallery']) %}
+    {% if messages %}
+      <div style="margin-top: 20px; text-align: center;">
+        {% for message in messages %}
+          <div style="display: inline-block; background-color: #d4edda; color: #155724; padding: 12px 20px; border: 1px solid #c3e6cb; border-radius: 5px;">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+</div>
+
+
+    
+
+    <a href="{{ url_for('admin_logout') }}" class="logout-link">Logout</a>
   </div>
 </body>
 </html>

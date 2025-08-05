@@ -17,8 +17,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'shubhammaurya8840@gmail.com'  # ✅ Your Gmail ID
-app.config['MAIL_PASSWORD'] = 'bogt rdls gfof mraa'     # ✅ App password from Gmail
+app.config['MAIL_USERNAME'] = 'rcftifiin@gmail.com'  # ✅ Your Gmail ID
+app.config['MAIL_PASSWORD'] = 'bfvo ajcl hbpf gukp'     # ✅ App password from Gmail
 
 mail = Mail(app)
 otp_store = {}  # Temporary dictionary
@@ -173,16 +173,26 @@ def admin_upload():
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
 
-    if request.method == 'POST':
+    # PDF upload logic
+    if request.method == 'POST' and 'menu_pdf' in request.files:
         file = request.files['menu_pdf']
         if file and allowed_file(file.filename):
             for f in os.listdir(app.config['UPLOAD_FOLDER']):
                 os.remove(os.path.join(app.config['UPLOAD_FOLDER'], f))
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            flash("PDF Uploaded Successfully!")
+            flash("✅ PDF uploaded successfully!", 'pdf')  # ✅ PDF-specific message with category
+
             return redirect(url_for('admin_upload'))
-    return render_template('admin_upload.html')
+
+    # Load gallery preview
+    gallery_folder = os.path.join('static', 'gallery')
+    gallery_images = []
+    if os.path.exists(gallery_folder):
+        gallery_images = [img for img in os.listdir(gallery_folder) if img.lower().endswith(('.jpg', '.jpeg', '.png'))][:4]
+
+    return render_template('admin_upload.html', gallery_images=gallery_images)
+
 
 # 🚪 Logout
 @app.route('/admin/logout')
@@ -253,6 +263,38 @@ def admin_reset():
             error = f"Error: {str(e)}"
 
     return render_template('admin_reset.html', error=error, message=message)
+# 📸 Upload Gallery Images (4 inputs - fixed names)
+
+
+GALLERY_FOLDER = 'static/gallery'
+ALLOWED_IMAGE_EXTENSIONS = {'jpg', 'jpeg', 'png'}
+
+app.config['GALLERY_FOLDER'] = GALLERY_FOLDER
+
+def allowed_image(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_IMAGE_EXTENSIONS
+
+@app.route('/admin/upload-gallery', methods=['POST'])
+def admin_upload_images():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+
+    for i in range(1, 5):
+        file = request.files.get(f'image{i}')
+        if file and allowed_image(file.filename):
+            filename = f'gallery{i}.jpg'
+            path = os.path.join(app.config['GALLERY_FOLDER'], filename)
+            if os.path.exists(path):
+                os.remove(path)  # Delete previous
+            file.save(path)
+
+    flash("✅ Gallery images uploaded successfully!", 'gallery')
+    return redirect(url_for('admin_upload'))
+
+
+
+
+
 
 
 

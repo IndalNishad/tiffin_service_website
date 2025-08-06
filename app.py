@@ -7,8 +7,10 @@ from pymongo import MongoClient
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 from werkzeug.security import generate_password_hash, check_password_hash
+from dotenv import load_dotenv
 
-MONGO_URI = "mongodb+srv://tiffinadmin:RCF%401508@rcf.ic4jzf6.mongodb.net/?retryWrites=true&w=majority&appName=RCF"
+load_dotenv()
+MONGO_URI = os.getenv("MONGO_URI")
 
 client = MongoClient(MONGO_URI)
 db = client['tiffin_admin']             # Your database name

@@ -3,6 +3,17 @@ import os
 from werkzeug.utils import secure_filename
 from flask_mail import Mail, Message
 import random
+from pymongo import MongoClient
+from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+
+MONGO_URI = "mongodb+srv://tiffinadmin:RCF%401508@rcf.ic4jzf6.mongodb.net/?retryWrites=true&w=majority&appName=RCF"
+
+client = MongoClient(MONGO_URI)
+db = client['tiffin_admin']             # Your database name
+collection = db['credentials']          # Your collection name
+
 
 
 
@@ -25,38 +36,31 @@ otp_store = {}  # Temporary dictionary
 
 @app.route('/admin/send-otp', methods=['GET', 'POST'])
 def send_otp():
-    message = error = None
+    error = message = None
     if request.method == 'POST':
         email = request.form.get('email')
 
         if not email:
             error = "❌ Email is required."
         else:
-            # ✅ Load registered email from admin.json
-            if os.path.exists('admin.json'):
-                with open('admin.json', 'r') as f:
-                    data = json.load(f)
-                registered_email = data.get('email')
+            admin = collection.find_one({'email': email})
 
-                # ✅ Match entered email
-                if email != registered_email:
-                    error = "❌ Enter your registered admin email."
-                else:
-                    # ✅ Proceed to send OTP
-                    otp = str(random.randint(100000, 999999))
-                    otp_store[email] = otp
-                    try:
-                        msg = Message('Your OTP Code', sender=app.config['MAIL_USERNAME'], recipients=[email])
-                        msg.body = f'Your OTP code is: {otp}'
-                        mail.send(msg)
-                        return redirect(url_for('verify_otp', email=email))
-                    except Exception as e:
-                        print(e)
-                        error = "❌ Failed to send OTP. Check email configuration."
+            if not admin:
+                error = "❌ This email is not registered."
             else:
-                error = "❌ Admin email not found in system."
+                otp = str(random.randint(100000, 999999))
+                otp_store[email] = otp
+                try:
+                    msg = Message('Your OTP Code', sender=app.config['MAIL_USERNAME'], recipients=[email])
+                    msg.body = f'Your OTP code is: {otp}'
+                    mail.send(msg)
+                    return redirect(url_for('verify_otp', email=email))
+                except Exception as e:
+                    print(e)
+                    error = "❌ Failed to send OTP. Check email config."
 
     return render_template('send_otp.html', error=error, message=message)
+
 
 
 @app.route('/admin/verify-otp/<email>', methods=['GET', 'POST'])
@@ -81,6 +85,8 @@ def verify_otp(email):
     return render_template('verify_otp.html', email=email, error=error, message=message)
 
 
+
+
 @app.route('/admin/reset-password', methods=['GET', 'POST'])
 def reset_password():
     if not session.get('otp_verified'):
@@ -92,24 +98,28 @@ def reset_password():
         new_user = request.form.get('new_username')
         new_pass = request.form.get('new_password')
 
-        # Update admin.json
-        with open('admin.json', 'r') as f:
-            data = json.load(f)
+        hashed = generate_password_hash(new_pass)
 
-        data['username'] = new_user
-        data['password'] = new_pass
+        # Update admin in MongoDB
+        result = collection.update_one(
+            {"email": session.get('verified_email')},  # Find by email
+            {"$set": {
+                "username": new_user,
+                "password": hashed
+            }}
+        )
 
-        with open('admin.json', 'w') as f:
-            json.dump(data, f)
-
-        # Clear session
-        session.pop('otp_verified', None)
-        session.pop('verified_email', None)
-
-        # Show success page
-        return render_template('reset_success.html')
+        if result.modified_count:
+            # Clear session after success
+            session.pop('otp_verified', None)
+            session.pop('verified_email', None)
+            session['show_reset_message'] = True
+            return render_template('reset_success.html')
+        else:
+            error = "❌ Failed to update credentials. Try again."
 
     return render_template('admin_reset_password.html', error=error, message=message)
+
 
 
 
@@ -141,28 +151,20 @@ import json
 def admin_login():
     error = None
 
-    # Load stored credentials from admin.json
-    if os.path.exists('admin.json'):
-        with open('admin.json', 'r') as f:
-            creds = json.load(f)
-        stored_username = creds.get('username', ADMIN_USERNAME)
-        stored_password = creds.get('password', ADMIN_PASSWORD)
-    else:
-        stored_username = ADMIN_USERNAME
-        stored_password = ADMIN_PASSWORD
-
-    # 🔐 Show reset message only once
-    if session.pop('show_reset_message', None):
-        flash("✅ Credentials updated! Please login.")
-
     if request.method == 'POST':
-        if request.form['username'] == stored_username and request.form['password'] == stored_password:
+        username = request.form['username']
+        password = request.form['password']
+
+        admin = collection.find_one({'username': username})
+
+        if admin and check_password_hash(admin['password'], password):
             session['admin_logged_in'] = True
             return redirect(url_for('admin_upload'))
         else:
-            error = 'Invalid Credentials'
-    
+            error = '❌ Invalid credentials'
+
     return render_template('admin_login.html', error=error)
+
 
 
 
@@ -213,11 +215,10 @@ def admin_forgot():
     if request.method == 'POST':
         email = request.form.get('email')
 
-        with open('admin.json', 'r') as f:
-            data = json.load(f)
+        # ✅ STEP: Check if entered email matches MongoDB admin
+        admin = collection.find_one({'email': email})
 
-        # ✅ STEP: Check if entered email matches registered admin email
-        if email != data.get('email'):
+        if not admin:
             error = "❌ This email is not registered as admin."
         else:
             # Proceed to generate and store OTP
@@ -232,7 +233,10 @@ def admin_forgot():
 
 
 
+
 # Run
+
+
 @app.route('/admin/reset', methods=['GET', 'POST'])
 def admin_reset():
     error = None
@@ -245,24 +249,35 @@ def admin_reset():
         new_pass = request.form['new_password'].strip()
 
         try:
-            with open('admin.json', 'r') as f:
-                data = json.load(f)
+            # 🔍 Find admin with old username
+            admin = collection.find_one({'username': old_user})
 
-            if old_user == data.get('username') and old_pass == data.get('password'):
-                # Update only username and password
-                data['username'] = new_user
-                data['password'] = new_pass
+            if admin and check_password_hash(admin['password'], old_pass):
+                # ✅ Update new credentials
+                new_hashed_pass = generate_password_hash(new_pass)
 
-                with open('admin.json', 'w') as f:
-                    json.dump(data, f, indent=4)
+                collection.update_one(
+                    {'username': old_user},
+                    {'$set': {
+                        'username': new_user,
+                        'password': new_hashed_pass
+                    }}
+                )
 
-                message = "✅ Credentials updated successfully!"
+                # 🔐 Log out the current session
+                session.pop('admin_logged_in', None)
+
+                message = "✅ Credentials updated successfully! Please log in again."
+
             else:
                 error = "❌ Old credentials are incorrect."
+
         except Exception as e:
             error = f"Error: {str(e)}"
 
     return render_template('admin_reset.html', error=error, message=message)
+
+
 # 📸 Upload Gallery Images (4 inputs - fixed names)
 
 
